@@ -7,15 +7,18 @@ const appFontFamily = 'Inter';
 const appTextTheme = TextTheme(
   headline1: TextStyle(
     fontWeight: FontWeight.bold,
-    fontSize: 36,
+    fontSize: 32,
     letterSpacing: -1,
   ),
   subtitle1: TextStyle(
     fontWeight: FontWeight.bold,
-    fontSize: 16,
+    fontSize: 18,
   ),
   button: TextStyle(
     fontWeight: FontWeight.bold,
+    fontSize: 16,
+  ),
+  bodyText1: TextStyle(
     fontSize: 14,
   ),
 );

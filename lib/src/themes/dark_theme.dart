@@ -8,7 +8,7 @@ const _textColor = Color(0xFFF1F1F1);
 /// The [ThemeData] to use in dark mode.
 final darkTheme = ThemeData(
   fontFamily: appFontFamily,
-  backgroundColor: const Color(0xFFF1F1F1),
+  backgroundColor: const Color(0xFF021128),
   // app's primary color is the same as text color
   primaryColor: _textColor,
   textTheme: appTextTheme.apply(
@@ -16,7 +16,8 @@ final darkTheme = ThemeData(
     bodyColor: _textColor.withOpacity(0.8),
   ),
   primaryTextTheme: appTextTheme.apply(
-    displayColor: Colors.white,
-    bodyColor: Colors.white.withOpacity(0.8),
+    displayColor: Colors.black,
+    bodyColor: Colors.black.withOpacity(0.8),
   ),
+  unselectedWidgetColor: _textColor.withOpacity(0.2),
 );
