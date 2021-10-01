@@ -13,8 +13,10 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  firebase_core: 0.7.0
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^1.0.0-dev.7
+  cloud_firestore: ^0.16.0+1
 
 dev_dependencies:
   flutter_test:
