@@ -22,7 +22,7 @@ class TodoListStore extends StateNotifier<List<Todo>> {
 
   TodoListStore(this._read)
       : super(List.generate(
-            100,
+            10,
             (index) => Todo(
                   id: index,
                   content: 'Task ${index + 1}',
@@ -32,14 +32,16 @@ class TodoListStore extends StateNotifier<List<Todo>> {
   /// Creates a new [Todo] with [content] that will be the content of the [Todo].
   /// The created [Todo] will be added to the current list of [Todo]s.
   void addTodo({required String content}) {
-    state = [
-      ...state,
-      Todo(
-        id: _generateTodoId(),
-        content: content,
-        isCompleted: false,
-      ),
-    ];
+    if (content.isNotEmpty) {
+      state = [
+        ...state,
+        Todo(
+          id: _generateTodoId(),
+          content: content,
+          isCompleted: false,
+        ),
+      ];
+    }
   }
 
   /// Edits the [Todo] with the given id [withId] using [editor].

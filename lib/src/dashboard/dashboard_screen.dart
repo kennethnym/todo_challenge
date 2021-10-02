@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:todo_challenge/src/dashboard/filtered_todo_list_provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
 import 'package:todo_challenge/src/dashboard/todo_list_section.dart';
 
+import 'todo_composer/todo_composer.dart';
 import 'dynamic_header.dart';
 import 'add_todo_button.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends HookWidget {
   /// The padding that applies to the dashboard.
   static const padding = EdgeInsets.only(
     left: 16,
@@ -19,6 +21,7 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
+    final addTodoButtonKeyRef = useRef(GlobalKey());
 
     return Scaffold(
       backgroundColor: theme.backgroundColor,
@@ -55,12 +58,15 @@ class DashboardScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: padding.left,
-                vertical: mediaQuery.padding.bottom + 24,
+                horizontal: DashboardScreen.padding.left,
+                vertical: MediaQuery.of(context).padding.bottom + 24,
               ),
-              child: const AddTodoButton(),
+              child: AddTodoButton(
+                key: addTodoButtonKeyRef.value,
+              ),
             ),
           ),
+          const TodoComposer(),
         ],
       ),
     );
