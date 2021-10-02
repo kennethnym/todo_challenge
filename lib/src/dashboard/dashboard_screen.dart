@@ -47,10 +47,15 @@ class DashboardScreen extends HookWidget {
                 title: 'UPCOMING TASK',
                 filter: TodoListVisibilityFilter.incomplete,
               ),
-              const TodoListSection(
-                title: 'COMPLETED',
-                filter: TodoListVisibilityFilter.completed,
-                showItemCount: true,
+              const SliverPadding(
+                // add bottom padding to the completed to-do list
+                // to account for the floating add button
+                padding: EdgeInsets.only(bottom: 128),
+                sliver: TodoListSection(
+                  title: 'COMPLETED',
+                  filter: TodoListVisibilityFilter.completed,
+                  showItemCount: true,
+                ),
               ),
             ],
           ),
