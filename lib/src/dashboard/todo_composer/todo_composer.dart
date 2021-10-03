@@ -23,6 +23,11 @@ class TodoComposer extends HookConsumerWidget {
           todoContentTextFieldController.text;
     }, [ref]);
 
+    final closeComposerOnBackPressed = useCallback(() async {
+      ref.read(todoComposerControllerProvider.notifier).closeTodoComposer();
+      return false;
+    }, []);
+
     useEffect(() {
       todoComposerMode.when(
         addTodo: () {
@@ -51,37 +56,41 @@ class TodoComposer extends HookConsumerWidget {
       };
     }, [todoContentTextFieldController, todoContentTextFieldListener]);
 
-    return TodoComposerAnimator(
-      child: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            TextField(
-              readOnly: todoComposerMode is ViewTodo,
-              controller: todoContentTextFieldController,
-              focusNode: todoContentTextFieldFocusNode,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(16),
-                border: InputBorder.none,
-                hintText: 'Type in your task here...',
-                hintStyle: TextStyle(
-                  color: theme.primaryTextTheme.bodyText1?.color,
+    return WillPopScope(
+      onWillPop: closeComposerOnBackPressed,
+      child: TodoComposerAnimator(
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              TextField(
+                readOnly: todoComposerMode is ViewTodo,
+                controller: todoContentTextFieldController,
+                focusNode: todoContentTextFieldFocusNode,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(16),
+                  border: InputBorder.none,
+                  hintText: 'Type in your task here...',
+                  hintStyle: TextStyle(
+                    color: theme.primaryTextTheme.bodyText1?.color,
+                  ),
                 ),
+                cursorColor: theme.primaryTextTheme.bodyText1?.color,
+                style: theme.primaryTextTheme.bodyText1,
               ),
-              cursorColor: theme.primaryTextTheme.bodyText1?.color,
-              style: theme.primaryTextTheme.bodyText1,
-            ),
-            Divider(
-              color: theme.primaryTextTheme.bodyText1?.color?.withOpacity(0.5),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8,
+              Divider(
+                color:
+                    theme.primaryTextTheme.bodyText1?.color?.withOpacity(0.5),
               ),
-              child: TodoComposerActions(),
-            ),
-            const SizedBox(height: 16),
-          ],
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
+                child: TodoComposerActions(),
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );
