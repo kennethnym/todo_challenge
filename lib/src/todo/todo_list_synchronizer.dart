@@ -44,6 +44,9 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
     _initialize();
   }
 
+  /// Pulls to-do lists saved on the server to local.
+  Future<void> refreshList() => _fetchServerTodoList();
+
   void _initialize() async {
     await _fetchServerTodoList();
     _subscribeToLocalListChanges();
@@ -51,6 +54,14 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
   }
 
   Future<void> _fetchServerTodoList() async {
+    // don't allow refreshing when syncing or when sync is on timeout
+    // to avoid losing changes.
+    if (state == TodoSyncState.syncing || _syncTimer?.isActive == true) return;
+
+    if (state == TodoSyncState.synced) {
+      state = TodoSyncState.syncing;
+    }
+
     final query = await _todoCollection.get();
     for (final doc in query.docs) {
       final todo = Todo.fromJson(doc.data());
@@ -61,6 +72,10 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
     }
     _read(todoListStoreProvider.notifier)
         .importTodos(_serverTodoDocuments.values.map((doc) => doc.todo));
+
+    if (state == TodoSyncState.syncing) {
+      state = TodoSyncState.synced;
+    }
   }
 
   void _subscribeToLocalListChanges() {
