@@ -30,7 +30,7 @@ class TodoListSectionItem extends HookConsumerWidget {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: DashboardScreen.padding.left,
-        vertical: 16,
+        vertical: 8,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -47,6 +47,11 @@ class DashboardScreen extends HookWidget {
                 title: 'UPCOMING TASK',
                 filter: TodoListVisibilityFilter.incomplete,
               ),
+              SliverToBoxAdapter(
+                child: Divider(
+                  color: theme.textTheme.bodyText1?.color?.withOpacity(0.5),
+                ),
+              ),
               const SliverPadding(
                 // add bottom padding to the completed to-do list
                 // to account for the floating add button
