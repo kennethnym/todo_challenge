@@ -47,6 +47,12 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
   /// Pulls to-do lists saved on the server to local.
   Future<void> refreshList() => _fetchServerTodoList();
 
+  @override
+  void dispose() {
+    _syncTimer?.cancel();
+    super.dispose();
+  }
+
   void _initialize() async {
     await _fetchServerTodoList();
     _subscribeToLocalListChanges();
