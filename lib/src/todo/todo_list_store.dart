@@ -29,6 +29,11 @@ class TodoListStore extends StateNotifier<List<Todo>> {
                   isCompleted: false,
                 )));
 
+  /// Imports [todos] to this store. All existing todos will be overwritten.
+  void importTodos(Iterable<Todo> todos) {
+    state = [...todos];
+  }
+
   /// Creates a new [Todo] with [content] that will be the content of the [Todo].
   /// The created [Todo] will be added to the current list of [Todo]s.
   void addTodo({required String content}) {

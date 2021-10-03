@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_challenge/src/todo_repository/todo.dart';
-import 'package:todo_challenge/src/todo_repository/todo_list_store.dart';
+import 'package:todo_challenge/src/todo/todo.dart';
+import 'package:todo_challenge/src/todo/todo_list_store.dart';
 
 /// A collection of filters that can be applied to the to-do list
 /// to show more specific to-dos.

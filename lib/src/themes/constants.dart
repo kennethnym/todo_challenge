@@ -19,6 +19,6 @@ const appTextTheme = TextTheme(
     fontSize: 16,
   ),
   bodyText1: TextStyle(
-    fontSize: 14,
+    fontSize: 16,
   ),
 );

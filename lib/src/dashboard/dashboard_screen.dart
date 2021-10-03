@@ -39,7 +39,7 @@ class DashboardScreen extends HookWidget {
                   title: const DynamicHeader(),
                   titlePadding: EdgeInsetsDirectional.only(
                     start: padding.left,
-                    bottom: 16,
+                    bottom: 8,
                   ),
                 ),
               ),
