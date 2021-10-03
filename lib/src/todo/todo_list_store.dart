@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/providers/random_generator_provider.dart';
+import 'package:todo_challenge/src/utils/random_utils.dart';
 
 import 'todo.dart';
 
@@ -31,7 +32,12 @@ class TodoListStore extends StateNotifier<List<Todo>> {
 
   /// Imports [todos] to this store. All existing todos will be overwritten.
   void importTodos(Iterable<Todo> todos) {
-    state = [...todos];
+    final importedTodos = <Todo>[];
+    for (final todo in todos) {
+      importedTodos.add(todo);
+      _existingTodoIds.add(todo.id);
+    }
+    state = importedTodos;
   }
 
   /// Creates a new [Todo] with [content] that will be the content of the [Todo].
@@ -61,7 +67,7 @@ class TodoListStore extends StateNotifier<List<Todo>> {
   int _generateTodoId() {
     late int id;
     do {
-      id = _read(randomGeneratorProvider).nextInt(1 << 32);
+      id = _read(randomGeneratorProvider).nextBigInt(bit: 32);
     } while (_existingTodoIds.contains(id));
     _existingTodoIds.add(id);
     return id;
