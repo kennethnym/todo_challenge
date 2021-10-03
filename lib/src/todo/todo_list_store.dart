@@ -21,14 +21,7 @@ class TodoListStore extends StateNotifier<List<Todo>> {
 
   final Reader _read;
 
-  TodoListStore(this._read)
-      : super(List.generate(
-            10,
-            (index) => Todo(
-                  id: index,
-                  content: 'Task ${index + 1}',
-                  isCompleted: false,
-                )));
+  TodoListStore(this._read) : super([]);
 
   /// Imports [todos] to this store. All existing todos will be overwritten.
   void importTodos(Iterable<Todo> todos) {

@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'todo.g.dart';
 
 /// Represents a to-do item.
 @JsonSerializable()
-class Todo {
+class Todo extends Equatable {
   /// A unique ID that identifies this [Todo].
   final int id;
 
@@ -45,4 +46,7 @@ class Todo {
         if (content != other.content) 'content': content,
         if (id != other.id) 'id': id,
       };
+
+  @override
+  List<Object?> get props => [id, content, isCompleted];
 }

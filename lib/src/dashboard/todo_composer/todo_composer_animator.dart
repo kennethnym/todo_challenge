@@ -19,38 +19,40 @@ class TodoComposerAnimator extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isTodoComposerVisible = ref.watch(todoComposerControllerProvider);
-    final isTodoComposerPreviouslyVisible = usePrevious(isTodoComposerVisible);
+    final todoComposerMode = ref.watch(todoComposerControllerProvider);
+    final prevTodoComposerMode = usePrevious(todoComposerMode);
     final animationController =
         useAnimationController(initialValue: _hiddenPosition);
     final shouldRender = useState(false);
     final theme = Theme.of(context);
 
+    final isComposerHidden = todoComposerMode is Hidden;
+
     final animationControllerListener = useCallback(() {
-      if (!animationController.isAnimating && !isTodoComposerVisible) {
+      if (!animationController.isAnimating && isComposerHidden) {
         shouldRender.value = false;
       }
-    }, [animationController, shouldRender.value, isTodoComposerVisible]);
+    }, [animationController, shouldRender.value, todoComposerMode]);
 
     useEffect(() {
-      if (isTodoComposerVisible == isTodoComposerPreviouslyVisible) {
+      if (todoComposerMode == prevTodoComposerMode) {
         return null;
       }
 
-      if (isTodoComposerVisible && !shouldRender.value) {
+      if (!isComposerHidden && !shouldRender.value) {
         shouldRender.value = true;
       }
 
       animationController
         ..spring(
-          to: isTodoComposerVisible ? _expandedPosition : _hiddenPosition,
+          to: !isComposerHidden ? _expandedPosition : _hiddenPosition,
         )
         ..addListener(animationControllerListener);
 
       return () {
         animationController.removeListener(animationControllerListener);
       };
-    }, [isTodoComposerVisible, animationController, shouldRender.value]);
+    }, [isComposerHidden, animationController, shouldRender.value]);
 
     if (!shouldRender.value) {
       return Container();

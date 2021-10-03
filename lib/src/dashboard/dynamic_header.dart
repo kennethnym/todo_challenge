@@ -11,22 +11,26 @@ class DynamicHeader extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final todoListSyncStatus = ref.watch(todoListSynchronizerProvider);
     final incompleteTodos = ref
         .watch(filteredTodoListProvider(TodoListVisibilityFilter.incomplete));
 
-    if (incompleteTodos.isEmpty) {
-      return Text('0 task due 🎉', style: theme.textTheme.headline1);
-    }
-
     final incompleteTodoCount = incompleteTodos.length;
+
+    late final String statusText;
+    if (todoListSyncStatus == TodoSyncState.initializing) {
+      statusText = 'Loading...';
+    } else if (incompleteTodos.isEmpty) {
+      statusText = '0 task due 🎉';
+    } else {
+      statusText =
+          '$incompleteTodoCount task${incompleteTodoCount > 1 ? 's' : ''} due.';
+    }
 
     return Row(
       children: [
         Expanded(
-          child: Text(
-            '$incompleteTodoCount task${incompleteTodoCount > 1 ? 's' : ''} due.',
-            style: theme.textTheme.headline1,
-          ),
+          child: Text(statusText, style: theme.textTheme.headline1),
         ),
         const _SyncStatusIndicator(),
       ],

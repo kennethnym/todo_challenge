@@ -25,7 +25,7 @@ enum TodoSyncState {
 /// Specifies how long [TodoListSynchronizer] should wait after the local list is
 /// modified before the changes are committed to the server.
 /// If new local changes are made within the timeout, the timeout is reset.
-const _syncTimeout = Duration(seconds: 5);
+const _syncTimeout = Duration(seconds: 2);
 
 /// Synchronizes changes from local to-do list to server.
 class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
