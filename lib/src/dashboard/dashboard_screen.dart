@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
+import 'package:todo_challenge/src/dashboard/todo_composer/todo_composer.dart';
 import 'package:todo_challenge/src/dashboard/todo_list_section.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
 import 'package:todo_challenge/src/widgets/screen.dart';
 
-import 'todo_composer/todo_composer.dart';
 import 'dynamic_header.dart';
 import 'add_todo_button.dart';
 
@@ -38,6 +38,7 @@ class DashboardScreen extends HookConsumerWidget {
                     title: const DynamicHeader(),
                     titlePadding: EdgeInsetsDirectional.only(
                       start: Screen.padding.left,
+                      end: Screen.padding.right,
                       bottom: 8,
                     ),
                   ),

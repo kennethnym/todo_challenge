@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_challenge/src/dashboard/todo_composer/editable_todo.dart';
 
+import 'editable_todo.dart';
 import 'todo_composer_controller.dart';
 import 'todo_composer_actions.dart';
 import 'todo_composer_animator.dart';
+
+export 'todo_composer_controller.dart';
 
 /// A widget that allows users to composes a new to-do.
 class TodoComposer extends HookConsumerWidget {

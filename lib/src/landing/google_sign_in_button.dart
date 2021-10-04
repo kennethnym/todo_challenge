@@ -16,15 +16,19 @@ class GoogleSignInButton extends HookConsumerWidget {
     }, [ref]);
 
     return authStatus.maybeWhen(
-      notLoggedIn: () => Button(
-        expanded: true,
-        label: 'Continue with Google ->',
-        onTap: continueWithGoogle,
+      notLoggedIn: () => Center(
+        child: Button(
+          expanded: true,
+          label: 'Continue with Google ->',
+          onTap: continueWithGoogle,
+        ),
       ),
-      loggingIn: () => const SizedBox(
-        width: 32,
-        height: 32,
-        child: CircularProgressIndicator(),
+      loggingIn: () => const Center(
+        child: SizedBox(
+          width: 32,
+          height: 32,
+          child: CircularProgressIndicator(),
+        ),
       ),
       orElse: () => Container(),
     );
