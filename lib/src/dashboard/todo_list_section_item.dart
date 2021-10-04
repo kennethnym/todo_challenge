@@ -6,6 +6,7 @@ import 'package:todo_challenge/src/dashboard/todo_composer/todo_composer_control
 import 'package:todo_challenge/src/todo/todo.dart';
 import 'package:todo_challenge/src/todo/todo_list_store.dart';
 import 'package:todo_challenge/src/widgets/app_checkbox.dart';
+import 'package:todo_challenge/src/widgets/screen.dart';
 
 import 'todo_list_section.dart';
 
@@ -47,7 +48,7 @@ class TodoListSectionItem extends HookConsumerWidget {
       onTap: viewTodo,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: DashboardScreen.padding.left,
+          horizontal: Screen.padding.left,
           vertical: 8,
         ),
         color: isPressed.value

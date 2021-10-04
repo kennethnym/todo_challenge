@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
+import 'package:todo_challenge/src/widgets/screen.dart';
 
 import 'dashboard_screen.dart';
 import 'todo_list_section_item.dart';
@@ -79,8 +80,8 @@ class _SectionTitle extends HookWidget {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.only(
-          left: DashboardScreen.padding.left,
-          right: DashboardScreen.padding.right,
+          left: Screen.padding.left,
+          right: Screen.padding.right,
           top: 8,
           bottom: 8,
         ),

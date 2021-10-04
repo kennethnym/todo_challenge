@@ -3,9 +3,17 @@ import 'package:flutter/services.dart';
 
 import 'themes/themes.dart';
 import 'dashboard/dashboard_screen.dart';
+import 'landing/landing_screen.dart';
+import 'routes.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  /// The name of the route that [App] should show initially.
+  final String initialRoute;
+
+  const App({
+    Key? key,
+    required this.initialRoute,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +25,11 @@ class App extends StatelessWidget {
       title: 'Todo',
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: const DashboardScreen(),
+      initialRoute: initialRoute,
+      routes: {
+        AppRoute.landing: (_) => const LandingScreen(),
+        AppRoute.dashboard: (_) => const DashboardScreen(),
+      },
     );
   }
 }

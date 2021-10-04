@@ -10,6 +10,10 @@ const appTextTheme = TextTheme(
     fontSize: 32,
     letterSpacing: -1,
   ),
+  headline2: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+  ),
   subtitle1: TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 18,

@@ -4,19 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
 import 'package:todo_challenge/src/dashboard/todo_list_section.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
+import 'package:todo_challenge/src/widgets/screen.dart';
 
 import 'todo_composer/todo_composer.dart';
 import 'dynamic_header.dart';
 import 'add_todo_button.dart';
 
 class DashboardScreen extends HookConsumerWidget {
-  /// The padding that applies to the dashboard.
-  static const padding = EdgeInsets.only(
-    left: 16,
-    right: 16,
-    top: 64,
-  );
-
   const DashboardScreen({Key? key}) : super(key: key);
 
   @override
@@ -25,9 +19,8 @@ class DashboardScreen extends HookConsumerWidget {
     final mediaQuery = MediaQuery.of(context);
     final addTodoButtonKeyRef = useRef(GlobalKey());
 
-    return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      body: RefreshIndicator(
+    return Screen(
+      child: RefreshIndicator(
         strokeWidth: 4.0,
         onRefresh: ref.read(todoListSynchronizerProvider.notifier).refreshList,
         child: Stack(
@@ -44,7 +37,7 @@ class DashboardScreen extends HookConsumerWidget {
                   flexibleSpace: FlexibleSpaceBar(
                     title: const DynamicHeader(),
                     titlePadding: EdgeInsetsDirectional.only(
-                      start: padding.left,
+                      start: Screen.padding.left,
                       bottom: 8,
                     ),
                   ),
@@ -74,7 +67,7 @@ class DashboardScreen extends HookConsumerWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: DashboardScreen.padding.left,
+                  horizontal: Screen.padding.left,
                   vertical: MediaQuery.of(context).padding.bottom + 24,
                 ),
                 child: AddTodoButton(
