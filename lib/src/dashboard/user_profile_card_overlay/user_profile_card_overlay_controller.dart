@@ -5,13 +5,13 @@ import 'user_profile_card_visibility.dart';
 
 export 'user_profile_card_visibility.dart';
 
-final userProfileCardControllerProvider =
-    StateNotifierProvider<UserProfileCardController, UserProfileCardVisibility>(
-        (_) => UserProfileCardController());
+final userProfileCardControllerOverlayProvider =
+    StateNotifierProvider<UserProfileCardOverlayController, UserProfileCardVisibility>(
+        (_) => UserProfileCardOverlayController());
 
-class UserProfileCardController
+class UserProfileCardOverlayController
     extends StateNotifier<UserProfileCardVisibility> {
-  UserProfileCardController() : super(const UserProfileCardVisibility.hidden());
+  UserProfileCardOverlayController() : super(const UserProfileCardVisibility.hidden());
 
   void showProfile({required User ofUser}) {
     state = UserProfileCardVisibility.visible(ofUser);

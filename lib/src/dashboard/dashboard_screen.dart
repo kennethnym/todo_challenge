@@ -7,10 +7,9 @@ import 'package:todo_challenge/src/dashboard/todo_list_section.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
 import 'package:todo_challenge/src/widgets/screen.dart';
 
+import 'user_profile_card_overlay/user_profile_card_overlay.dart';
 import 'dynamic_header.dart';
 import 'add_todo_button.dart';
-import 'user_profile_card/user_profile_card.dart';
-import 'user_profile_card/user_profile_card_controller.dart';
 
 class DashboardScreen extends HookConsumerWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -22,9 +21,11 @@ class DashboardScreen extends HookConsumerWidget {
     final addTodoButtonKeyRef = useRef(GlobalKey());
 
     final handleBackButtonPress = useCallback(() async {
-      if (ref.read(userProfileCardControllerProvider)
+      if (ref.read(userProfileCardControllerOverlayProvider)
           is UserProfileCardVisible) {
-        ref.read(userProfileCardControllerProvider.notifier).closeProfile();
+        ref
+            .read(userProfileCardControllerOverlayProvider.notifier)
+            .closeProfile();
         return false;
       } else if (ref.read(todoComposerControllerProvider) is! Hidden) {
         ref.read(todoComposerControllerProvider.notifier).closeTodoComposer();
@@ -94,9 +95,7 @@ class DashboardScreen extends HookConsumerWidget {
                 ),
               ),
               const TodoComposer(),
-              const Positioned.fill(
-                child: UserProfileCard(),
-              ),
+              const UserProfileCardOverlay(),
             ],
           ),
         ),

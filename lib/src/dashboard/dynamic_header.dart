@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
-import 'package:todo_challenge/src/dashboard/user_avatar.dart';
+import 'package:todo_challenge/src/user/current_user_avatar.dart';
+import 'package:todo_challenge/src/user/user_avatar.dart';
 
 /// A header shown on the dashboard that shows user how many tasks are due soon.
 class DynamicHeader extends HookConsumerWidget {
@@ -47,7 +48,7 @@ class _SyncStatusIndicator extends HookConsumerWidget {
 
     switch (todoListSyncStatus) {
       case TodoSyncState.synced:
-        return const UserAvatar();
+        return const CurrentUserAvatar();
 
       case TodoSyncState.syncing:
       case TodoSyncState.initializing:
