@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:todo_challenge/src/auth/auth_service.dart';
 
 import 'todo_list_store.dart';
 import 'todo.dart';
@@ -20,6 +22,9 @@ enum TodoSyncState {
 
   /// [TodoListSynchronizer] has successfully synced local changes to server.
   synced,
+
+  /// [TodoListSynchronizer] has stopped syncing.
+  stopped,
 }
 
 /// Specifies how long [TodoListSynchronizer] should wait after the local list is
@@ -40,8 +45,10 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
 
   Timer? _syncTimer;
 
+  late final VoidCallback _cancelAuthStatusListener;
+
   TodoListSynchronizer(this._read) : super(TodoSyncState.initializing) {
-    _initialize();
+    _listenToAuthStatusChanges();
   }
 
   /// Pulls to-do lists saved on the server to local.
@@ -49,11 +56,30 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
 
   @override
   void dispose() {
-    _syncTimer?.cancel();
+    _stopSyncing();
+    _cancelAuthStatusListener();
     super.dispose();
   }
 
-  void _initialize() async {
+  void _listenToAuthStatusChanges() {
+    _cancelAuthStatusListener =
+        _read(authServiceProvider.notifier).addListener(_authStatusListener);
+  }
+
+  void _authStatusListener(AuthStatus status) {
+    status.maybeWhen(
+      loggedIn: (_) {
+        _startSyncing();
+      },
+      notLoggedIn: () {
+        _stopSyncing();
+        state = TodoSyncState.stopped;
+      },
+      orElse: () {},
+    );
+  }
+
+  void _startSyncing() async {
     await _fetchServerTodoList();
     _subscribeToLocalListChanges();
     state = TodoSyncState.synced;
@@ -94,6 +120,14 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
   void _syncListToServer(List<Todo> newList) {
     _syncTimer?.cancel();
     _syncTimer = Timer(_syncTimeout, () async {
+      final authStatus = _read(authServiceProvider);
+
+      if (authStatus is! AuthStatusLoggedIn) {
+        return;
+      }
+
+      final user = authStatus.loggedInUser;
+
       state = TodoSyncState.syncing;
 
       final batchOperations = FirebaseFirestore.instance.batch();
@@ -117,7 +151,10 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
           // a new to-do is created locally
           updatedTodos[localTodo.id] =
               _TodoDocument(docRef: newDoc, todo: localTodo);
-          batchOperations.set(newDoc, localTodo.toJson());
+          batchOperations.set(newDoc, {
+            ...localTodo.toJson(),
+            'created_by': user.uid,
+          });
         }
       }
 
@@ -126,6 +163,10 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
 
       state = TodoSyncState.synced;
     });
+  }
+
+  void _stopSyncing() {
+    _syncTimer?.cancel();
   }
 }
 
