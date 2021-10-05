@@ -9,7 +9,7 @@ const _textColor = Color(0xFFF1F1F1);
 final darkTheme = ThemeData(
   fontFamily: appFontFamily,
   backgroundColor: const Color(0xFF021128),
-  cardColor: const Color(0xFF001D42),
+  cardColor: const Color(0xFF031938),
   // app's primary color is the same as text color
   primaryColor: _textColor,
   textTheme: appTextTheme.apply(

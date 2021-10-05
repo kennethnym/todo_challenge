@@ -27,6 +27,7 @@ class CurrentUserAvatar extends HookConsumerWidget {
       loggedIn: (user) => UserAvatar(
         user: user,
         size: size,
+        onTap: onTap,
       ),
       orElse: () => Container(),
     );

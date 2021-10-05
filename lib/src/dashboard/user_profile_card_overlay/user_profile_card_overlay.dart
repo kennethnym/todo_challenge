@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_challenge/src/user/user_avatar.dart';
+import 'package:todo_challenge/src/auth/auth_service.dart';
 import 'package:todo_challenge/src/user/user_profile_card.dart';
 import 'package:todo_challenge/src/widgets/slide_animation.dart';
 
@@ -17,6 +17,7 @@ class UserProfileCardOverlay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userProfileCardVisibility =
         ref.watch(userProfileCardControllerOverlayProvider);
+    final authStatus = ref.watch(authServiceProvider);
 
     final isUserProfileCardVisible =
         userProfileCardVisibility is UserProfileCardVisible;
@@ -34,9 +35,9 @@ class UserProfileCardOverlay extends HookConsumerWidget {
         SlideAnimation(
           visible: isUserProfileCardVisible,
           child: Center(
-            child: userProfileCardVisibility.when(
-              visible: (user) => UserProfileCard(user: user),
-              hidden: () => Container(),
+            child: authStatus.maybeWhen(
+              loggedIn: (user) => UserProfileCard(user: user),
+              orElse: () => Container(),
             ),
           ),
         ),

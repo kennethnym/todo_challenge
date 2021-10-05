@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/auth/auth_service.dart';
@@ -47,6 +48,8 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
 
   late final VoidCallback _cancelAuthStatusListener;
 
+  User? _loggedInUser;
+
   TodoListSynchronizer(this._read) : super(TodoSyncState.initializing) {
     _listenToAuthStatusChanges();
   }
@@ -68,14 +71,18 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
 
   void _authStatusListener(AuthStatus status) {
     status.maybeWhen(
-      loggedIn: (_) {
+      loggedIn: (user) {
+        _loggedInUser = user;
         _startSyncing();
       },
       notLoggedIn: () {
+        _loggedInUser = null;
         _stopSyncing();
         state = TodoSyncState.stopped;
       },
-      orElse: () {},
+      orElse: () {
+        _loggedInUser = null;
+      },
     );
   }
 
@@ -90,11 +97,17 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
     // to avoid losing changes.
     if (state == TodoSyncState.syncing || _syncTimer?.isActive == true) return;
 
+    final loggedInUser = _loggedInUser;
+    if (loggedInUser == null) return;
+
     if (state == TodoSyncState.synced) {
       state = TodoSyncState.syncing;
     }
 
-    final query = await _todoCollection.get();
+    final query = await _todoCollection
+        .where('created_by', isEqualTo: loggedInUser.uid)
+        .get();
+
     for (final doc in query.docs) {
       final todo = Todo.fromJson(doc.data());
       _serverTodoDocuments[todo.id] = _TodoDocument(
@@ -102,6 +115,7 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
         todo: todo,
       );
     }
+
     _read(todoListStoreProvider.notifier)
         .importTodos(_serverTodoDocuments.values.map((doc) => doc.todo));
 

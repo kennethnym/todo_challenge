@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
+import 'package:todo_challenge/src/auth/auth_service.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
 import 'package:todo_challenge/src/user/current_user_avatar.dart';
-import 'package:todo_challenge/src/user/user_avatar.dart';
+
+import 'user_profile_card_overlay/user_profile_card_overlay.dart';
+import 'providers/filtered_todo_list_provider.dart';
 
 /// A header shown on the dashboard that shows user how many tasks are due soon.
 class DynamicHeader extends HookConsumerWidget {
@@ -46,9 +49,20 @@ class _SyncStatusIndicator extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final todoListSyncStatus = ref.watch(todoListSynchronizerProvider);
 
+    final showUserProfileCardOverlay = useCallback(() {
+      final authStatus = ref.read(authServiceProvider);
+      if (authStatus is AuthStatusLoggedIn) {
+        ref
+            .read(userProfileCardControllerOverlayProvider.notifier)
+            .showProfile(ofUser: authStatus.loggedInUser);
+      }
+    }, [ref]);
+
     switch (todoListSyncStatus) {
       case TodoSyncState.synced:
-        return const CurrentUserAvatar();
+        return CurrentUserAvatar(
+          onTap: showUserProfileCardOverlay,
+        );
 
       case TodoSyncState.syncing:
       case TodoSyncState.initializing:

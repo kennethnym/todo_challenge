@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'user_avatar.dart';
 
@@ -49,14 +48,20 @@ class _UserProfileCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         UserAvatar(user: user, size: 64),
         const SizedBox(height: 16),
-        Text(user.displayName ?? 'No name',
-            style: Theme.of(context).textTheme.headline2),
-        Text(user.email ?? 'No email'),
+        Text(
+          user.displayName ?? 'No name',
+          style: theme.textTheme.headline2,
+        ),
+        Text(
+          user.email ?? 'No email',
+          style: theme.textTheme.bodyText1,
+        ),
       ],
     );
   }
