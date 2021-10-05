@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/auth/auth_service.dart';
+import 'package:todo_challenge/src/dashboard/user_profile_card/user_profile_card_controller.dart';
 import 'package:todo_challenge/src/utils/spring_animation.dart';
 
 /// Defines the width and height of [UserAvatar].
@@ -10,28 +11,44 @@ const _avatarSize = 24.0;
 
 /// Displays the avatar of the user's account.
 class UserAvatar extends HookConsumerWidget {
-  const UserAvatar({Key? key}) : super(key: key);
+  final double size;
+
+  const UserAvatar({
+    Key? key,
+    this.size = _avatarSize,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authStatus = ref.read(authServiceProvider);
+    final authStatus = ref.watch(authServiceProvider);
 
     return authStatus.maybeWhen(
-      loggedIn: (user) => _UserAvatar(user: user),
+      serviceInitializing: () =>
+          const Opacity(opacity: 0, child: _AvatarPlaceholder()),
+      loggedIn: (user) => _UserAvatar(
+        user: user,
+        size: size,
+      ),
       orElse: () => Container(),
     );
   }
 }
 
 /// This is shown when the user account has an avatar.
-class _UserAvatar extends HookWidget {
+class _UserAvatar extends HookConsumerWidget {
   /// The url to the avatar image.
   final User user;
 
-  const _UserAvatar({Key? key, required this.user}) : super(key: key);
+  final double size;
+
+  const _UserAvatar({
+    Key? key,
+    required this.user,
+    required this.size,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final avatarUrl = user.photoURL;
     final animationController = useAnimationController(
       initialValue: 1.0,
@@ -46,19 +63,26 @@ class _UserAvatar extends HookWidget {
       animationController.spring(to: 1.0, stiffness: 400, damping: 25);
     }, [animationController]);
 
+    final showUserProfile = useCallback(() {
+      ref
+          .read(userProfileCardControllerProvider.notifier)
+          .showProfile(ofUser: user);
+    }, [ref]);
+
     return GestureDetector(
       onTapUp: scaleDown,
       onTapDown: scaleUp,
       onTapCancel: scaleDown,
+      onTap: showUserProfile,
       child: ScaleTransition(
         scale: animationController,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(_avatarSize / 2),
+          borderRadius: BorderRadius.circular(size / 2),
           child: avatarUrl != null
               ? Image.network(
                   avatarUrl,
-                  width: _avatarSize,
-                  height: _avatarSize,
+                  width: size,
+                  height: size,
                 )
               : const _AvatarPlaceholder(),
         ),

@@ -9,6 +9,8 @@ import 'package:todo_challenge/src/widgets/screen.dart';
 
 import 'dynamic_header.dart';
 import 'add_todo_button.dart';
+import 'user_profile_card/user_profile_card.dart';
+import 'user_profile_card/user_profile_card_controller.dart';
 
 class DashboardScreen extends HookConsumerWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -19,65 +21,84 @@ class DashboardScreen extends HookConsumerWidget {
     final mediaQuery = MediaQuery.of(context);
     final addTodoButtonKeyRef = useRef(GlobalKey());
 
-    return Screen(
-      child: RefreshIndicator(
-        strokeWidth: 4.0,
-        onRefresh: ref.read(todoListSynchronizerProvider.notifier).refreshList,
-        child: Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  expandedHeight: mediaQuery.size.height * 0.2,
-                  backgroundColor: theme.backgroundColor,
-                  shadowColor:
-                      theme.textTheme.bodyText1?.color?.withOpacity(0.1),
-                  primary: true,
-                  pinned: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: const DynamicHeader(),
-                    titlePadding: EdgeInsetsDirectional.only(
-                      start: Screen.padding.left,
-                      end: Screen.padding.right,
-                      bottom: 8,
+    final handleBackButtonPress = useCallback(() async {
+      if (ref.read(userProfileCardControllerProvider)
+          is UserProfileCardVisible) {
+        ref.read(userProfileCardControllerProvider.notifier).closeProfile();
+        return false;
+      } else if (ref.read(todoComposerControllerProvider) is! Hidden) {
+        ref.read(todoComposerControllerProvider.notifier).closeTodoComposer();
+        return false;
+      }
+      return true;
+    }, [ref]);
+
+    return WillPopScope(
+      onWillPop: handleBackButtonPress,
+      child: Screen(
+        child: RefreshIndicator(
+          strokeWidth: 4.0,
+          onRefresh:
+              ref.read(todoListSynchronizerProvider.notifier).refreshList,
+          child: Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    expandedHeight: mediaQuery.size.height * 0.2,
+                    backgroundColor: theme.backgroundColor,
+                    shadowColor:
+                        theme.textTheme.bodyText1?.color?.withOpacity(0.1),
+                    primary: true,
+                    pinned: true,
+                    flexibleSpace: FlexibleSpaceBar(
+                      title: const DynamicHeader(),
+                      titlePadding: EdgeInsetsDirectional.only(
+                        start: Screen.padding.left,
+                        end: Screen.padding.right,
+                        bottom: 8,
+                      ),
                     ),
                   ),
-                ),
-                const TodoListSection(
-                  title: 'UPCOMING TASK',
-                  filter: TodoListVisibilityFilter.incomplete,
-                ),
-                SliverToBoxAdapter(
-                  child: Divider(
-                    color: theme.textTheme.bodyText1?.color?.withOpacity(0.5),
+                  const TodoListSection(
+                    title: 'UPCOMING TASK',
+                    filter: TodoListVisibilityFilter.incomplete,
                   ),
-                ),
-                const SliverPadding(
-                  // add bottom padding to the completed to-do list
-                  // to account for the floating add button
-                  padding: EdgeInsets.only(bottom: 128),
-                  sliver: TodoListSection(
-                    title: 'COMPLETED',
-                    filter: TodoListVisibilityFilter.completed,
-                    showItemCount: true,
+                  SliverToBoxAdapter(
+                    child: Divider(
+                      color: theme.textTheme.bodyText1?.color?.withOpacity(0.5),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Screen.padding.left,
-                  vertical: MediaQuery.of(context).padding.bottom + 24,
-                ),
-                child: AddTodoButton(
-                  key: addTodoButtonKeyRef.value,
+                  const SliverPadding(
+                    // add bottom padding to the completed to-do list
+                    // to account for the floating add button
+                    padding: EdgeInsets.only(bottom: 128),
+                    sliver: TodoListSection(
+                      title: 'COMPLETED',
+                      filter: TodoListVisibilityFilter.completed,
+                      showItemCount: true,
+                    ),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Screen.padding.left,
+                    vertical: MediaQuery.of(context).padding.bottom + 24,
+                  ),
+                  child: AddTodoButton(
+                    key: addTodoButtonKeyRef.value,
+                  ),
                 ),
               ),
-            ),
-            const TodoComposer(),
-          ],
+              const TodoComposer(),
+              const Positioned.fill(
+                child: UserProfileCard(),
+              ),
+            ],
+          ),
         ),
       ),
     );
