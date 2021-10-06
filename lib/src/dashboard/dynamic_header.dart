@@ -60,6 +60,7 @@ class _SyncStatusIndicator extends HookConsumerWidget {
 
     switch (todoListSyncStatus) {
       case TodoSyncStatus.synced:
+      case TodoSyncStatus.failed:
         return CurrentUserAvatar(
           onTap: showUserProfileCardOverlay,
         );
