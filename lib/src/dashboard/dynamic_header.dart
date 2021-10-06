@@ -22,7 +22,7 @@ class DynamicHeader extends HookConsumerWidget {
     final incompleteTodoCount = incompleteTodos.length;
 
     late final String statusText;
-    if (todoListSyncStatus == TodoSyncState.initializing) {
+    if (todoListSyncStatus == TodoSyncStatus.initializing) {
       statusText = 'Loading...';
     } else if (incompleteTodos.isEmpty) {
       statusText = '0 task due 🎉';
@@ -59,13 +59,13 @@ class _SyncStatusIndicator extends HookConsumerWidget {
     }, [ref]);
 
     switch (todoListSyncStatus) {
-      case TodoSyncState.synced:
+      case TodoSyncStatus.synced:
         return CurrentUserAvatar(
           onTap: showUserProfileCardOverlay,
         );
 
-      case TodoSyncState.syncing:
-      case TodoSyncState.initializing:
+      case TodoSyncStatus.syncing:
+      case TodoSyncStatus.initializing:
         return const SizedBox(
           width: 24,
           height: 24,

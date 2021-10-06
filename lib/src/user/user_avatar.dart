@@ -54,6 +54,7 @@ class UserAvatar extends HookConsumerWidget {
                   avatarUrl,
                   width: size,
                   height: size,
+                  errorBuilder: (_, __, ___) => const AvatarPlaceholder(),
                 ),
               )
             : const AvatarPlaceholder(),

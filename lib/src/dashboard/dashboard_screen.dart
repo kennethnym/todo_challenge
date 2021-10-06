@@ -5,6 +5,7 @@ import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provid
 import 'package:todo_challenge/src/dashboard/todo_composer/todo_composer.dart';
 import 'package:todo_challenge/src/dashboard/todo_list_section.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
+import 'package:todo_challenge/src/todo/widgets/todo_sync_failed_snackbar.dart';
 import 'package:todo_challenge/src/widgets/screen.dart';
 
 import 'user_profile_card_overlay/user_profile_card_overlay.dart';
@@ -18,7 +19,6 @@ class DashboardScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
-    final addTodoButtonKeyRef = useRef(GlobalKey());
 
     final handleBackButtonPress = useCallback(() async {
       if (ref.read(userProfileCardControllerOverlayProvider)
@@ -33,6 +33,21 @@ class DashboardScreen extends HookConsumerWidget {
       }
       return true;
     }, [ref]);
+
+    final syncStatusListener = useCallback((TodoSyncStatus status) {
+      switch (status) {
+        case TodoSyncStatus.failed:
+          ScaffoldMessenger.of(context).showSnackBar(
+            todoSyncFailedSnackBar(),
+          );
+          break;
+
+        default:
+          break;
+      }
+    }, []);
+
+    ref.listen(todoListSynchronizerProvider, syncStatusListener);
 
     return WillPopScope(
       onWillPop: handleBackButtonPress,
@@ -82,18 +97,7 @@ class DashboardScreen extends HookConsumerWidget {
                   ),
                 ],
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Screen.padding.left,
-                    vertical: MediaQuery.of(context).padding.bottom + 24,
-                  ),
-                  child: AddTodoButton(
-                    key: addTodoButtonKeyRef.value,
-                  ),
-                ),
-              ),
+              const AddTodoButton(),
               const TodoComposer(),
               const UserProfileCardOverlay(),
             ],

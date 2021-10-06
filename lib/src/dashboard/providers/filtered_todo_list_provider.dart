@@ -12,6 +12,8 @@ enum TodoListVisibilityFilter {
   incomplete,
 }
 
+/// Defines a function that determines whetheer the given [Todo]
+/// goes through the filter.
 typedef _TodoFilterFunction = bool Function(Todo);
 
 final _filterMaps = <TodoListVisibilityFilter, _TodoFilterFunction>{

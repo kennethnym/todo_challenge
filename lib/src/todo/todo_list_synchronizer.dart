@@ -11,10 +11,11 @@ import 'todo.dart';
 
 /// Provides the instance of [TodoListSynchronizer].
 final todoListSynchronizerProvider =
-    StateNotifierProvider((ref) => TodoListSynchronizer(ref.read));
+    StateNotifierProvider<TodoListSynchronizer, TodoSyncStatus>(
+        (ref) => TodoListSynchronizer(ref.read));
 
 /// Possible sync statuses of [TodoListSynchronizer].
-enum TodoSyncState {
+enum TodoSyncStatus {
   /// [TodoListSynchronizer] is initializing
   initializing,
 
@@ -26,6 +27,9 @@ enum TodoSyncState {
 
   /// [TodoListSynchronizer] has stopped syncing.
   stopped,
+
+  /// [TodoListSynchronizer] failed to perform synchronization.
+  failed,
 }
 
 /// Specifies how long [TodoListSynchronizer] should wait after the local list is
@@ -34,7 +38,7 @@ enum TodoSyncState {
 const _syncTimeout = Duration(seconds: 2);
 
 /// Synchronizes changes from local to-do list to server.
-class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
+class TodoListSynchronizer extends StateNotifier<TodoSyncStatus> {
   /// The list of [Todo]s that the server stores.
   final _serverTodoDocuments = <int, _TodoDocument>{};
 
@@ -50,7 +54,7 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
 
   User? _loggedInUser;
 
-  TodoListSynchronizer(this._read) : super(TodoSyncState.initializing) {
+  TodoListSynchronizer(this._read) : super(TodoSyncStatus.initializing) {
     _listenToAuthStatusChanges();
   }
 
@@ -78,7 +82,7 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
       notLoggedIn: () {
         _loggedInUser = null;
         _stopSyncing();
-        state = TodoSyncState.stopped;
+        state = TodoSyncStatus.stopped;
       },
       orElse: () {
         _loggedInUser = null;
@@ -89,38 +93,42 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
   void _startSyncing() async {
     await _fetchServerTodoList();
     _subscribeToLocalListChanges();
-    state = TodoSyncState.synced;
+    state = TodoSyncStatus.synced;
   }
 
   Future<void> _fetchServerTodoList() async {
     // don't allow refreshing when syncing or when sync is on timeout
     // to avoid losing changes.
-    if (state == TodoSyncState.syncing || _syncTimer?.isActive == true) return;
+    if (state == TodoSyncStatus.syncing || _syncTimer?.isActive == true) return;
 
     final loggedInUser = _loggedInUser;
     if (loggedInUser == null) return;
 
-    if (state == TodoSyncState.synced) {
-      state = TodoSyncState.syncing;
+    if (state == TodoSyncStatus.synced) {
+      state = TodoSyncStatus.syncing;
     }
 
-    final query = await _todoCollection
-        .where('created_by', isEqualTo: loggedInUser.uid)
-        .get();
+    try {
+      final query = await _todoCollection
+          .where('created_by', isEqualTo: loggedInUser.uid)
+          .get();
 
-    for (final doc in query.docs) {
-      final todo = Todo.fromJson(doc.data());
-      _serverTodoDocuments[todo.id] = _TodoDocument(
-        docRef: doc.reference,
-        todo: todo,
-      );
-    }
+      for (final doc in query.docs) {
+        final todo = Todo.fromJson(doc.data());
+        _serverTodoDocuments[todo.id] = _TodoDocument(
+          docRef: doc.reference,
+          todo: todo,
+        );
+      }
 
-    _read(todoListStoreProvider.notifier)
-        .importTodos(_serverTodoDocuments.values.map((doc) => doc.todo));
+      _read(todoListStoreProvider.notifier)
+          .importTodos(_serverTodoDocuments.values.map((doc) => doc.todo));
 
-    if (state == TodoSyncState.syncing) {
-      state = TodoSyncState.synced;
+      if (state == TodoSyncStatus.syncing) {
+        state = TodoSyncStatus.synced;
+      }
+    } catch (ex) {
+      state = TodoSyncStatus.failed;
     }
   }
 
@@ -142,7 +150,7 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
 
       final user = authStatus.loggedInUser;
 
-      state = TodoSyncState.syncing;
+      state = TodoSyncStatus.syncing;
 
       final batchOperations = FirebaseFirestore.instance.batch();
 
@@ -172,10 +180,13 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncState> {
         }
       }
 
-      await batchOperations.commit();
-      _serverTodoDocuments.addAll(updatedTodos);
-
-      state = TodoSyncState.synced;
+      try {
+        await batchOperations.commit();
+        _serverTodoDocuments.addAll(updatedTodos);
+        state = TodoSyncStatus.synced;
+      } catch (ex) {
+        state = TodoSyncStatus.failed;
+      }
     });
   }
 
