@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:todo_challenge/src/widgets/slide_animation.dart';
 
 import 'editable_todo.dart';
 import 'todo_composer_controller.dart';
 import 'todo_composer_actions.dart';
-import 'todo_composer_animator.dart';
 
 export 'todo_composer_controller.dart';
 
@@ -53,37 +53,50 @@ class TodoComposer extends HookConsumerWidget {
       };
     }, [todoContentTextFieldController, todoContentTextFieldListener]);
 
-    return TodoComposerAnimator(
-      child: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            TextField(
-              readOnly: todoComposerMode is ViewTodo,
-              controller: todoContentTextFieldController,
-              focusNode: todoContentTextFieldFocusNode,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(16),
-                border: InputBorder.none,
-                hintText: 'Type in your task here...',
-                hintStyle: TextStyle(
-                  color: theme.primaryTextTheme.bodyText1?.color,
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: SlideAnimation(
+        visible: todoComposerMode is! Hidden,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: theme.primaryColor,
+          ),
+          child: SafeArea(
+            top: false,
+            child: Column(
+              children: [
+                TextField(
+                  readOnly: todoComposerMode is ViewTodo,
+                  controller: todoContentTextFieldController,
+                  focusNode: todoContentTextFieldFocusNode,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(16),
+                    border: InputBorder.none,
+                    hintText: 'Type in your task here...',
+                    hintStyle: TextStyle(
+                      color: theme.primaryTextTheme.bodyText1?.color,
+                    ),
+                  ),
+                  cursorColor: theme.primaryTextTheme.bodyText1?.color,
+                  style: theme.primaryTextTheme.bodyText1,
                 ),
-              ),
-              cursorColor: theme.primaryTextTheme.bodyText1?.color,
-              style: theme.primaryTextTheme.bodyText1,
+                Divider(
+                  color:
+                      theme.primaryTextTheme.bodyText1?.color?.withOpacity(0.5),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8,
+                  ),
+                  child: TodoComposerActions(),
+                ),
+                const SizedBox(height: 16),
+              ],
             ),
-            Divider(
-              color: theme.primaryTextTheme.bodyText1?.color?.withOpacity(0.5),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8,
-              ),
-              child: TodoComposerActions(),
-            ),
-            const SizedBox(height: 16),
-          ],
+          ),
         ),
       ),
     );
