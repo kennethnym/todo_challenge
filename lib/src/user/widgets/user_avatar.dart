@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/utils/spring_animation.dart';
 
-/// This is shown when the user account has an avatar.
+/// Displays the avatar of a user.
 class UserAvatar extends HookConsumerWidget {
   /// The default size of [UserAvatar].
   static const defaultSize = 24.0;
@@ -12,10 +12,14 @@ class UserAvatar extends HookConsumerWidget {
   /// The url to the avatar image.
   final User user;
 
+  /// The size of the avatar image.
+  /// The default size is defined by [defaultSize].
   final double size;
 
+  /// An optional callback that is called when [UserAvatar] is tapped.
   final VoidCallback? onTap;
 
+  /// Creates a widget that shows the avatar of [user].
   const UserAvatar({
     Key? key,
     required this.user,
@@ -65,6 +69,8 @@ class UserAvatar extends HookConsumerWidget {
 /// A widget that shows an empty circle.
 /// Can be used when the user doesn't have an avatar.
 class AvatarPlaceholder extends StatelessWidget {
+  /// The size of the placeholder.
+  /// The default size is defined by [UserAvatar.defaultSize].
   final double size;
 
   const AvatarPlaceholder({

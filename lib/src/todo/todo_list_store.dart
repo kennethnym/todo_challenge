@@ -56,7 +56,7 @@ class TodoListStore extends StateNotifier<List<Todo>> {
         state.map((todo) => todo.id == withId ? editor(todo) : todo).toList();
   }
 
-  /// Generates a new ID for a [Todo].
+  /// Generates a new 32-bit ID for a [Todo].
   int _generateTodoId() {
     late int id;
     do {

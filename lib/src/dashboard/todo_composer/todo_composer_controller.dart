@@ -6,6 +6,8 @@ import 'todo_composer_mode.dart';
 
 export 'todo_composer_mode.dart';
 
+/// Provides the instance of [TodoComposerController] to be used
+/// to control the behavior of [TodoComposer].
 final todoComposerControllerProvider =
     StateNotifierProvider<TodoComposerController, TodoComposerMode>(
         (_) => TodoComposerController());
@@ -24,6 +26,7 @@ class TodoComposerController extends StateNotifier<TodoComposerMode> {
     state = const TodoComposerMode.hidden();
   }
 
+  /// Tells [TodoComposer] to show the content of [todo].
   void viewTodo(Todo todo) {
     state = TodoComposerMode.viewTodo(todo);
   }
