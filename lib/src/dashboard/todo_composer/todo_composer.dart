@@ -23,7 +23,7 @@ class TodoComposer extends HookConsumerWidget {
     final todoContentTextFieldListener = useCallback(() {
       ref.read(editableTodoProvider).content =
           todoContentTextFieldController.text;
-    }, [ref]);
+    }, [ref, todoContentTextFieldController]);
 
     useEffect(() {
       todoComposerMode.when(
@@ -43,7 +43,11 @@ class TodoComposer extends HookConsumerWidget {
           todoContentTextFieldFocusNode.unfocus();
         },
       );
-    }, [todoComposerMode]);
+    }, [
+      todoComposerMode,
+      todoContentTextFieldController,
+      todoContentTextFieldFocusNode
+    ]);
 
     useEffect(() {
       todoContentTextFieldController.addListener(todoContentTextFieldListener);
@@ -58,7 +62,7 @@ class TodoComposer extends HookConsumerWidget {
       left: 0,
       right: 0,
       child: SlideAnimation(
-        visible: todoComposerMode is! Hidden,
+        visible: todoComposerMode is! TodoComposerModeHidden,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
@@ -69,7 +73,7 @@ class TodoComposer extends HookConsumerWidget {
             child: Column(
               children: [
                 TextField(
-                  readOnly: todoComposerMode is ViewTodo,
+                  readOnly: todoComposerMode is TodoComposerModeViewTodo,
                   controller: todoContentTextFieldController,
                   focusNode: todoContentTextFieldFocusNode,
                   decoration: InputDecoration(

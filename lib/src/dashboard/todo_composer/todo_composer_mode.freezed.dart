@@ -17,22 +17,22 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$TodoComposerModeTearOff {
   const _$TodoComposerModeTearOff();
 
-  Hidden hidden() {
-    return const Hidden();
+  TodoComposerModeHidden hidden() {
+    return const TodoComposerModeHidden();
   }
 
-  AddTodo addTodo() {
-    return const AddTodo();
+  TodoComposerModeAddTodo addTodo() {
+    return const TodoComposerModeAddTodo();
   }
 
-  ViewTodo viewTodo(Todo selectedTodo) {
-    return ViewTodo(
+  TodoComposerModeViewTodo viewTodo(Todo selectedTodo) {
+    return TodoComposerModeViewTodo(
       selectedTodo,
     );
   }
 
-  EditTodo editTodo(Todo todo) {
-    return EditTodo(
+  TodoComposerModeEditTodo editTodo(Todo todo) {
+    return TodoComposerModeEditTodo(
       todo,
     );
   }
@@ -70,26 +70,26 @@ mixin _$TodoComposerMode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Hidden value) hidden,
-    required TResult Function(AddTodo value) addTodo,
-    required TResult Function(ViewTodo value) viewTodo,
-    required TResult Function(EditTodo value) editTodo,
+    required TResult Function(TodoComposerModeHidden value) hidden,
+    required TResult Function(TodoComposerModeAddTodo value) addTodo,
+    required TResult Function(TodoComposerModeViewTodo value) viewTodo,
+    required TResult Function(TodoComposerModeEditTodo value) editTodo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,25 +113,28 @@ class _$TodoComposerModeCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $HiddenCopyWith<$Res> {
-  factory $HiddenCopyWith(Hidden value, $Res Function(Hidden) then) =
-      _$HiddenCopyWithImpl<$Res>;
+abstract class $TodoComposerModeHiddenCopyWith<$Res> {
+  factory $TodoComposerModeHiddenCopyWith(TodoComposerModeHidden value,
+          $Res Function(TodoComposerModeHidden) then) =
+      _$TodoComposerModeHiddenCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$HiddenCopyWithImpl<$Res> extends _$TodoComposerModeCopyWithImpl<$Res>
-    implements $HiddenCopyWith<$Res> {
-  _$HiddenCopyWithImpl(Hidden _value, $Res Function(Hidden) _then)
-      : super(_value, (v) => _then(v as Hidden));
+class _$TodoComposerModeHiddenCopyWithImpl<$Res>
+    extends _$TodoComposerModeCopyWithImpl<$Res>
+    implements $TodoComposerModeHiddenCopyWith<$Res> {
+  _$TodoComposerModeHiddenCopyWithImpl(TodoComposerModeHidden _value,
+      $Res Function(TodoComposerModeHidden) _then)
+      : super(_value, (v) => _then(v as TodoComposerModeHidden));
 
   @override
-  Hidden get _value => super._value as Hidden;
+  TodoComposerModeHidden get _value => super._value as TodoComposerModeHidden;
 }
 
 /// @nodoc
 
-class _$Hidden implements Hidden {
-  const _$Hidden();
+class _$TodoComposerModeHidden implements TodoComposerModeHidden {
+  const _$TodoComposerModeHidden();
 
   @override
   String toString() {
@@ -140,7 +143,7 @@ class _$Hidden implements Hidden {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Hidden);
+    return identical(this, other) || (other is TodoComposerModeHidden);
   }
 
   @override
@@ -186,10 +189,10 @@ class _$Hidden implements Hidden {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Hidden value) hidden,
-    required TResult Function(AddTodo value) addTodo,
-    required TResult Function(ViewTodo value) viewTodo,
-    required TResult Function(EditTodo value) editTodo,
+    required TResult Function(TodoComposerModeHidden value) hidden,
+    required TResult Function(TodoComposerModeAddTodo value) addTodo,
+    required TResult Function(TodoComposerModeViewTodo value) viewTodo,
+    required TResult Function(TodoComposerModeEditTodo value) editTodo,
   }) {
     return hidden(this);
   }
@@ -197,10 +200,10 @@ class _$Hidden implements Hidden {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
   }) {
     return hidden?.call(this);
   }
@@ -208,10 +211,10 @@ class _$Hidden implements Hidden {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
     required TResult orElse(),
   }) {
     if (hidden != null) {
@@ -221,30 +224,33 @@ class _$Hidden implements Hidden {
   }
 }
 
-abstract class Hidden implements TodoComposerMode {
-  const factory Hidden() = _$Hidden;
+abstract class TodoComposerModeHidden implements TodoComposerMode {
+  const factory TodoComposerModeHidden() = _$TodoComposerModeHidden;
 }
 
 /// @nodoc
-abstract class $AddTodoCopyWith<$Res> {
-  factory $AddTodoCopyWith(AddTodo value, $Res Function(AddTodo) then) =
-      _$AddTodoCopyWithImpl<$Res>;
+abstract class $TodoComposerModeAddTodoCopyWith<$Res> {
+  factory $TodoComposerModeAddTodoCopyWith(TodoComposerModeAddTodo value,
+          $Res Function(TodoComposerModeAddTodo) then) =
+      _$TodoComposerModeAddTodoCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AddTodoCopyWithImpl<$Res> extends _$TodoComposerModeCopyWithImpl<$Res>
-    implements $AddTodoCopyWith<$Res> {
-  _$AddTodoCopyWithImpl(AddTodo _value, $Res Function(AddTodo) _then)
-      : super(_value, (v) => _then(v as AddTodo));
+class _$TodoComposerModeAddTodoCopyWithImpl<$Res>
+    extends _$TodoComposerModeCopyWithImpl<$Res>
+    implements $TodoComposerModeAddTodoCopyWith<$Res> {
+  _$TodoComposerModeAddTodoCopyWithImpl(TodoComposerModeAddTodo _value,
+      $Res Function(TodoComposerModeAddTodo) _then)
+      : super(_value, (v) => _then(v as TodoComposerModeAddTodo));
 
   @override
-  AddTodo get _value => super._value as AddTodo;
+  TodoComposerModeAddTodo get _value => super._value as TodoComposerModeAddTodo;
 }
 
 /// @nodoc
 
-class _$AddTodo implements AddTodo {
-  const _$AddTodo();
+class _$TodoComposerModeAddTodo implements TodoComposerModeAddTodo {
+  const _$TodoComposerModeAddTodo();
 
   @override
   String toString() {
@@ -253,7 +259,7 @@ class _$AddTodo implements AddTodo {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is AddTodo);
+    return identical(this, other) || (other is TodoComposerModeAddTodo);
   }
 
   @override
@@ -299,10 +305,10 @@ class _$AddTodo implements AddTodo {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Hidden value) hidden,
-    required TResult Function(AddTodo value) addTodo,
-    required TResult Function(ViewTodo value) viewTodo,
-    required TResult Function(EditTodo value) editTodo,
+    required TResult Function(TodoComposerModeHidden value) hidden,
+    required TResult Function(TodoComposerModeAddTodo value) addTodo,
+    required TResult Function(TodoComposerModeViewTodo value) viewTodo,
+    required TResult Function(TodoComposerModeEditTodo value) editTodo,
   }) {
     return addTodo(this);
   }
@@ -310,10 +316,10 @@ class _$AddTodo implements AddTodo {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
   }) {
     return addTodo?.call(this);
   }
@@ -321,10 +327,10 @@ class _$AddTodo implements AddTodo {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
     required TResult orElse(),
   }) {
     if (addTodo != null) {
@@ -334,31 +340,35 @@ class _$AddTodo implements AddTodo {
   }
 }
 
-abstract class AddTodo implements TodoComposerMode {
-  const factory AddTodo() = _$AddTodo;
+abstract class TodoComposerModeAddTodo implements TodoComposerMode {
+  const factory TodoComposerModeAddTodo() = _$TodoComposerModeAddTodo;
 }
 
 /// @nodoc
-abstract class $ViewTodoCopyWith<$Res> {
-  factory $ViewTodoCopyWith(ViewTodo value, $Res Function(ViewTodo) then) =
-      _$ViewTodoCopyWithImpl<$Res>;
+abstract class $TodoComposerModeViewTodoCopyWith<$Res> {
+  factory $TodoComposerModeViewTodoCopyWith(TodoComposerModeViewTodo value,
+          $Res Function(TodoComposerModeViewTodo) then) =
+      _$TodoComposerModeViewTodoCopyWithImpl<$Res>;
   $Res call({Todo selectedTodo});
 }
 
 /// @nodoc
-class _$ViewTodoCopyWithImpl<$Res> extends _$TodoComposerModeCopyWithImpl<$Res>
-    implements $ViewTodoCopyWith<$Res> {
-  _$ViewTodoCopyWithImpl(ViewTodo _value, $Res Function(ViewTodo) _then)
-      : super(_value, (v) => _then(v as ViewTodo));
+class _$TodoComposerModeViewTodoCopyWithImpl<$Res>
+    extends _$TodoComposerModeCopyWithImpl<$Res>
+    implements $TodoComposerModeViewTodoCopyWith<$Res> {
+  _$TodoComposerModeViewTodoCopyWithImpl(TodoComposerModeViewTodo _value,
+      $Res Function(TodoComposerModeViewTodo) _then)
+      : super(_value, (v) => _then(v as TodoComposerModeViewTodo));
 
   @override
-  ViewTodo get _value => super._value as ViewTodo;
+  TodoComposerModeViewTodo get _value =>
+      super._value as TodoComposerModeViewTodo;
 
   @override
   $Res call({
     Object? selectedTodo = freezed,
   }) {
-    return _then(ViewTodo(
+    return _then(TodoComposerModeViewTodo(
       selectedTodo == freezed
           ? _value.selectedTodo
           : selectedTodo // ignore: cast_nullable_to_non_nullable
@@ -369,8 +379,8 @@ class _$ViewTodoCopyWithImpl<$Res> extends _$TodoComposerModeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ViewTodo implements ViewTodo {
-  const _$ViewTodo(this.selectedTodo);
+class _$TodoComposerModeViewTodo implements TodoComposerModeViewTodo {
+  const _$TodoComposerModeViewTodo(this.selectedTodo);
 
   @override
   final Todo selectedTodo;
@@ -383,7 +393,7 @@ class _$ViewTodo implements ViewTodo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ViewTodo &&
+        (other is TodoComposerModeViewTodo &&
             (identical(other.selectedTodo, selectedTodo) ||
                 const DeepCollectionEquality()
                     .equals(other.selectedTodo, selectedTodo)));
@@ -395,8 +405,9 @@ class _$ViewTodo implements ViewTodo {
 
   @JsonKey(ignore: true)
   @override
-  $ViewTodoCopyWith<ViewTodo> get copyWith =>
-      _$ViewTodoCopyWithImpl<ViewTodo>(this, _$identity);
+  $TodoComposerModeViewTodoCopyWith<TodoComposerModeViewTodo> get copyWith =>
+      _$TodoComposerModeViewTodoCopyWithImpl<TodoComposerModeViewTodo>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -438,10 +449,10 @@ class _$ViewTodo implements ViewTodo {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Hidden value) hidden,
-    required TResult Function(AddTodo value) addTodo,
-    required TResult Function(ViewTodo value) viewTodo,
-    required TResult Function(EditTodo value) editTodo,
+    required TResult Function(TodoComposerModeHidden value) hidden,
+    required TResult Function(TodoComposerModeAddTodo value) addTodo,
+    required TResult Function(TodoComposerModeViewTodo value) viewTodo,
+    required TResult Function(TodoComposerModeEditTodo value) editTodo,
   }) {
     return viewTodo(this);
   }
@@ -449,10 +460,10 @@ class _$ViewTodo implements ViewTodo {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
   }) {
     return viewTodo?.call(this);
   }
@@ -460,10 +471,10 @@ class _$ViewTodo implements ViewTodo {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
     required TResult orElse(),
   }) {
     if (viewTodo != null) {
@@ -473,36 +484,41 @@ class _$ViewTodo implements ViewTodo {
   }
 }
 
-abstract class ViewTodo implements TodoComposerMode {
-  const factory ViewTodo(Todo selectedTodo) = _$ViewTodo;
+abstract class TodoComposerModeViewTodo implements TodoComposerMode {
+  const factory TodoComposerModeViewTodo(Todo selectedTodo) =
+      _$TodoComposerModeViewTodo;
 
   Todo get selectedTodo => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ViewTodoCopyWith<ViewTodo> get copyWith =>
+  $TodoComposerModeViewTodoCopyWith<TodoComposerModeViewTodo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EditTodoCopyWith<$Res> {
-  factory $EditTodoCopyWith(EditTodo value, $Res Function(EditTodo) then) =
-      _$EditTodoCopyWithImpl<$Res>;
+abstract class $TodoComposerModeEditTodoCopyWith<$Res> {
+  factory $TodoComposerModeEditTodoCopyWith(TodoComposerModeEditTodo value,
+          $Res Function(TodoComposerModeEditTodo) then) =
+      _$TodoComposerModeEditTodoCopyWithImpl<$Res>;
   $Res call({Todo todo});
 }
 
 /// @nodoc
-class _$EditTodoCopyWithImpl<$Res> extends _$TodoComposerModeCopyWithImpl<$Res>
-    implements $EditTodoCopyWith<$Res> {
-  _$EditTodoCopyWithImpl(EditTodo _value, $Res Function(EditTodo) _then)
-      : super(_value, (v) => _then(v as EditTodo));
+class _$TodoComposerModeEditTodoCopyWithImpl<$Res>
+    extends _$TodoComposerModeCopyWithImpl<$Res>
+    implements $TodoComposerModeEditTodoCopyWith<$Res> {
+  _$TodoComposerModeEditTodoCopyWithImpl(TodoComposerModeEditTodo _value,
+      $Res Function(TodoComposerModeEditTodo) _then)
+      : super(_value, (v) => _then(v as TodoComposerModeEditTodo));
 
   @override
-  EditTodo get _value => super._value as EditTodo;
+  TodoComposerModeEditTodo get _value =>
+      super._value as TodoComposerModeEditTodo;
 
   @override
   $Res call({
     Object? todo = freezed,
   }) {
-    return _then(EditTodo(
+    return _then(TodoComposerModeEditTodo(
       todo == freezed
           ? _value.todo
           : todo // ignore: cast_nullable_to_non_nullable
@@ -513,8 +529,8 @@ class _$EditTodoCopyWithImpl<$Res> extends _$TodoComposerModeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EditTodo implements EditTodo {
-  const _$EditTodo(this.todo);
+class _$TodoComposerModeEditTodo implements TodoComposerModeEditTodo {
+  const _$TodoComposerModeEditTodo(this.todo);
 
   @override
   final Todo todo;
@@ -527,7 +543,7 @@ class _$EditTodo implements EditTodo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is EditTodo &&
+        (other is TodoComposerModeEditTodo &&
             (identical(other.todo, todo) ||
                 const DeepCollectionEquality().equals(other.todo, todo)));
   }
@@ -538,8 +554,9 @@ class _$EditTodo implements EditTodo {
 
   @JsonKey(ignore: true)
   @override
-  $EditTodoCopyWith<EditTodo> get copyWith =>
-      _$EditTodoCopyWithImpl<EditTodo>(this, _$identity);
+  $TodoComposerModeEditTodoCopyWith<TodoComposerModeEditTodo> get copyWith =>
+      _$TodoComposerModeEditTodoCopyWithImpl<TodoComposerModeEditTodo>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -581,10 +598,10 @@ class _$EditTodo implements EditTodo {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Hidden value) hidden,
-    required TResult Function(AddTodo value) addTodo,
-    required TResult Function(ViewTodo value) viewTodo,
-    required TResult Function(EditTodo value) editTodo,
+    required TResult Function(TodoComposerModeHidden value) hidden,
+    required TResult Function(TodoComposerModeAddTodo value) addTodo,
+    required TResult Function(TodoComposerModeViewTodo value) viewTodo,
+    required TResult Function(TodoComposerModeEditTodo value) editTodo,
   }) {
     return editTodo(this);
   }
@@ -592,10 +609,10 @@ class _$EditTodo implements EditTodo {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
   }) {
     return editTodo?.call(this);
   }
@@ -603,10 +620,10 @@ class _$EditTodo implements EditTodo {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Hidden value)? hidden,
-    TResult Function(AddTodo value)? addTodo,
-    TResult Function(ViewTodo value)? viewTodo,
-    TResult Function(EditTodo value)? editTodo,
+    TResult Function(TodoComposerModeHidden value)? hidden,
+    TResult Function(TodoComposerModeAddTodo value)? addTodo,
+    TResult Function(TodoComposerModeViewTodo value)? viewTodo,
+    TResult Function(TodoComposerModeEditTodo value)? editTodo,
     required TResult orElse(),
   }) {
     if (editTodo != null) {
@@ -616,11 +633,12 @@ class _$EditTodo implements EditTodo {
   }
 }
 
-abstract class EditTodo implements TodoComposerMode {
-  const factory EditTodo(Todo todo) = _$EditTodo;
+abstract class TodoComposerModeEditTodo implements TodoComposerMode {
+  const factory TodoComposerModeEditTodo(Todo todo) =
+      _$TodoComposerModeEditTodo;
 
   Todo get todo => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $EditTodoCopyWith<EditTodo> get copyWith =>
+  $TodoComposerModeEditTodoCopyWith<TodoComposerModeEditTodo> get copyWith =>
       throw _privateConstructorUsedError;
 }

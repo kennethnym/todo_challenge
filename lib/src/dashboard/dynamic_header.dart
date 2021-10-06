@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/auth/auth_service.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
-import 'package:todo_challenge/src/user/current_user_avatar.dart';
+import 'package:todo_challenge/src/user/widgets/current_user_avatar.dart';
 
 import 'user_profile_card_overlay/user_profile_card_overlay.dart';
 import 'providers/filtered_todo_list_provider.dart';

@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_challenge/src/auth/auth_service.dart';
 import 'package:todo_challenge/src/utils/spring_animation.dart';
 
 /// This is shown when the user account has an avatar.

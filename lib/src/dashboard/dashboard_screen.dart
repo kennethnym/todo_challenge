@@ -27,7 +27,8 @@ class DashboardScreen extends HookConsumerWidget {
             .read(userProfileCardControllerOverlayProvider.notifier)
             .closeProfile();
         return false;
-      } else if (ref.read(todoComposerControllerProvider) is! Hidden) {
+      } else if (ref.read(todoComposerControllerProvider)
+          is! TodoComposerModeHidden) {
         ref.read(todoComposerControllerProvider.notifier).closeTodoComposer();
         return false;
       }
@@ -45,7 +46,7 @@ class DashboardScreen extends HookConsumerWidget {
         default:
           break;
       }
-    }, []);
+    }, [context]);
 
     ref.listen(todoListSynchronizerProvider, syncStatusListener);
 

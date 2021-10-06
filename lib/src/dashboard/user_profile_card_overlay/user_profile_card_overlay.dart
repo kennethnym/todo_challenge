@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/auth/auth_service.dart';
-import 'package:todo_challenge/src/user/user_profile_card.dart';
+import 'package:todo_challenge/src/user/widgets/user_profile_card.dart';
 import 'package:todo_challenge/src/widgets/slide_animation.dart';
 
 import 'user_profile_card_overlay_controller.dart';
