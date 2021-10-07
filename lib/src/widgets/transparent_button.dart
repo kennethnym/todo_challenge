@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+/// A transparent button with an icon attached.
 class TransparentButton extends HookWidget {
   /// The padding of [TransparentButton] applied to its content.
   ///
@@ -12,11 +13,21 @@ class TransparentButton extends HookWidget {
   /// of 16 - [padding].
   static const padding = EdgeInsets.all(8);
 
+  /// The icon that should be shown to the left of [label].
   final IconData icon;
+
+  /// The label of the button.
   final String label;
+
+  /// The function that is called when [TransparentButton] is tapped.
   final VoidCallback onTap;
+
+  /// The [TextStyle] that overrides the default [TextStyle] applied.
   final TextStyle? textStyle;
 
+  /// Creates a transparent button.
+  ///
+  /// Use [textStyle] to override the default [TextStyle].
   const TransparentButton({
     Key? key,
     required this.icon,

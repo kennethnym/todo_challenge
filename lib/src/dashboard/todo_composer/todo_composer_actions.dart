@@ -27,12 +27,12 @@ class TodoComposerActions extends HookConsumerWidget {
 
     final addTodo = useCallback(() {
       final editableTodo = ref.read(editableTodoProvider);
-      editableTodo.reset();
       ref
         ..read(todoListStoreProvider.notifier).addTodo(
           content: editableTodo.content,
         )
         ..read(todoComposerControllerProvider.notifier).closeTodoComposer();
+      editableTodo.reset();
     }, [ref]);
 
     final editTodo = useCallback((Todo todo) {

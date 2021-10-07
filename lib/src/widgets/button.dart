@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
+/// A custom themed button.
 class Button extends StatelessWidget {
+  /// The label of the button
   final String label;
+
+  /// The function that is called when the button is tapped.
   final VoidCallback onTap;
+
+  /// Whether the button should take up the full width of parent.
   final bool expanded;
 
   const Button({
