@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
 import 'package:todo_challenge/src/widgets/screen.dart';
+import 'package:todo_challenge/src/utils/spring_animation.dart';
 
 import 'dashboard_screen.dart';
 import 'todo_list_section_item.dart';
@@ -47,6 +50,9 @@ class TodoListSection extends HookConsumerWidget {
   }
 }
 
+const _angleDown = 1.0;
+const _angleUp = 0.0;
+
 /// Draws the title for [TodoListSection]
 class _SectionTitle extends HookWidget {
   final String title;
@@ -65,7 +71,14 @@ class _SectionTitle extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final arrowAnimationController = useAnimationController(
+      initialValue: collapsed ? _angleDown : _angleUp,
+    );
     final isPressed = useState(false);
+
+    useEffect(() {
+      arrowAnimationController.spring(to: collapsed ? _angleDown : _angleUp);
+    }, [collapsed]);
 
     return GestureDetector(
       onTapDown: (_) {
@@ -96,9 +109,16 @@ class _SectionTitle extends HookWidget {
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ),
-            Icon(
-              collapsed ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
-              color: theme.textTheme.bodyText1?.color,
+            AnimatedBuilder(
+              animation: arrowAnimationController,
+              builder: (_, child) => Transform.rotate(
+                angle: pi * arrowAnimationController.value,
+                child: child,
+              ),
+              child: Icon(
+                Icons.keyboard_arrow_up,
+                color: theme.textTheme.bodyText1?.color,
+              ),
             ),
           ],
         ),
