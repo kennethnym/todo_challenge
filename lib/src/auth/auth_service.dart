@@ -36,6 +36,13 @@ class AuthService extends StateNotifier<AuthStatus> {
     }
   }
 
+  /// Logs the currently logged in user out.
+  void logOut() async {
+    state = const AuthStatus.loggingOut();
+    await FirebaseAuth.instance.signOut();
+    state = const AuthStatus.notLoggedIn();
+  }
+
   @override
   void dispose() {
     _authStateSubscription.cancel();

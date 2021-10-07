@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_challenge/src/auth/auth_service.dart';
 import 'package:todo_challenge/src/user/widgets/user_profile_card.dart';
@@ -16,11 +17,23 @@ class UserProfileCardOverlay extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userProfileCardVisibility =
-        ref.watch(userProfileCardControllerOverlayProvider);
+        ref.watch(userProfileCardOverlayControllerProvider);
     final authStatus = ref.watch(authServiceProvider);
 
     final isUserProfileCardVisible =
         userProfileCardVisibility is UserProfileCardVisible;
+
+    final logUserOut = useCallback(() {
+      ref
+        ..read(userProfileCardOverlayControllerProvider.notifier).closeProfile()
+        ..read(authServiceProvider.notifier).logOut();
+    }, [ref]);
+
+    final closeOverlay = useCallback(() {
+      ref
+          .read(userProfileCardOverlayControllerProvider.notifier)
+          .closeProfile();
+    }, [ref]);
 
     return Stack(
       children: [
@@ -36,7 +49,21 @@ class UserProfileCardOverlay extends HookConsumerWidget {
           visible: isUserProfileCardVisible,
           child: Center(
             child: authStatus.maybeWhen(
-              loggedIn: (user) => UserProfileCard(user: user),
+              loggedIn: (user) => UserProfileCard(
+                user: user,
+                actions: [
+                  UserProfileCardAction(
+                    icon: Icons.logout,
+                    label: 'Log out',
+                    onTap: logUserOut,
+                  ),
+                  UserProfileCardAction(
+                    icon: Icons.close,
+                    label: 'Close',
+                    onTap: closeOverlay,
+                  ),
+                ],
+              ),
               orElse: () => Container(),
             ),
           ),

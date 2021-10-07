@@ -13,4 +13,6 @@ class AuthStatus with _$AuthStatus {
   const factory AuthStatus.notLoggedIn() = AuthStatusNotLoggedIn;
 
   const factory AuthStatus.loggingIn() = AuthStatusLoggingIn;
+
+  const factory AuthStatus.loggingOut() = AuthStatusLoggingOut;
 }

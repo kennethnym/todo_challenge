@@ -53,7 +53,7 @@ class _SyncStatusIndicator extends HookConsumerWidget {
       final authStatus = ref.read(authServiceProvider);
       if (authStatus is AuthStatusLoggedIn) {
         ref
-            .read(userProfileCardControllerOverlayProvider.notifier)
+            .read(userProfileCardOverlayControllerProvider.notifier)
             .showProfile(ofUser: authStatus.loggedInUser);
       }
     }, [ref]);

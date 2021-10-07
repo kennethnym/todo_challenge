@@ -7,7 +7,7 @@ import 'user_profile_card_overlay.dart';
 export 'user_profile_card_visibility.dart';
 
 ///
-final userProfileCardControllerOverlayProvider = StateNotifierProvider<
+final userProfileCardOverlayControllerProvider = StateNotifierProvider<
     UserProfileCardOverlayController,
     UserProfileCardVisibility>((_) => UserProfileCardOverlayController());
 

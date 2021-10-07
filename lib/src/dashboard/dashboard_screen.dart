@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:todo_challenge/src/auth/auth_service.dart';
 import 'package:todo_challenge/src/dashboard/providers/filtered_todo_list_provider.dart';
 import 'package:todo_challenge/src/dashboard/todo_composer/todo_composer.dart';
 import 'package:todo_challenge/src/dashboard/todo_list_section.dart';
+import 'package:todo_challenge/src/routes.dart';
 import 'package:todo_challenge/src/todo/todo_list_synchronizer.dart';
 import 'package:todo_challenge/src/todo/widgets/todo_sync_failed_snackbar.dart';
 import 'package:todo_challenge/src/widgets/screen.dart';
@@ -21,10 +23,10 @@ class DashboardScreen extends HookConsumerWidget {
     final mediaQuery = MediaQuery.of(context);
 
     final handleBackButtonPress = useCallback(() async {
-      if (ref.read(userProfileCardControllerOverlayProvider)
+      if (ref.read(userProfileCardOverlayControllerProvider)
           is UserProfileCardVisible) {
         ref
-            .read(userProfileCardControllerOverlayProvider.notifier)
+            .read(userProfileCardOverlayControllerProvider.notifier)
             .closeProfile();
         return false;
       } else if (ref.read(todoComposerControllerProvider)
@@ -48,7 +50,15 @@ class DashboardScreen extends HookConsumerWidget {
       }
     }, [context]);
 
-    ref.listen(todoListSynchronizerProvider, syncStatusListener);
+    final authStatusListener = useCallback((AuthStatus authStatus) {
+      if (authStatus is AuthStatusNotLoggedIn) {
+        Navigator.of(context).popAndPushNamed(AppRoute.landing);
+      }
+    }, [context]);
+
+    ref
+      ..listen(authServiceProvider, authStatusListener)
+      ..listen(todoListSynchronizerProvider, syncStatusListener);
 
     return WillPopScope(
       onWillPop: handleBackButtonPress,

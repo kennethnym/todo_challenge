@@ -82,6 +82,7 @@ class TodoListSynchronizer extends StateNotifier<TodoSyncStatus> {
       notLoggedIn: () {
         _loggedInUser = null;
         _stopSyncing();
+        _serverTodoDocuments.clear();
         state = TodoSyncStatus.stopped;
       },
       orElse: () {

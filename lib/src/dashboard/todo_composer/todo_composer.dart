@@ -65,7 +65,10 @@ class TodoComposer extends HookConsumerWidget {
         visible: todoComposerMode is! TodoComposerModeHidden,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(4),
+              topRight: Radius.circular(4)
+            ),
             color: theme.primaryColor,
           ),
           child: SafeArea(
